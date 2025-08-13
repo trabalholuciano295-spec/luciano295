@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechPlus - Abrir Chamado</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: white;
+        margin: 0;
+        display: flex;
+    }
+    nav {
+        background-color: #1b1b1b;
+        padding: 20px;
+        width: 200px;
+        height: 100vh;
+    }
+    nav h2 {
+        margin-top: 0;
+        color: #6ab4ff;
+    }
+    nav a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        margin: 15px 0;
+        padding: 8px;
+        border-radius: 5px;
+        transition: background 0.3s;
+    }
+    nav a:hover {
+        background: #333;
+    }
+    main {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .aviso-chat {
+        background: #1e1e1e;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #4a7dff;
+        text-align: center;
+    }
+    .aviso-chat h3 {
+        margin: 0 0 8px 0;
+        color: #4a7dff;
+    }
+    .form-container {
+        background: #1e1e1e;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .form-container input, .form-container textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        background: #2a2a2a;
+        color: white;
+    }
+    .form-container button {
+        background: #4a7dff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .form-container button:hover {
+        background: #365fcc;
+    }
+</style>
+</head>
+<body>
+
+<nav>
+    <h2>TechPlus</h2>
+    <a href="#">Login</a>
+    <a href="#">Dashboard</a>
+    <a href="#">Abrir Chamado</a>
+    <a href="#">Meus Chamados</a>
+    <a href="#">Feedback's</a>
+    <a href="#">Termos</a>
+</nav>
+
+<main>
+    <!-- Aviso para usar o chat -->
+    <div class="aviso-chat">
+        <h3>💬 Antes de abrir um chamado</h3>
+        <p>Converse com nosso assistente virtual no canto inferior direito.  
+        Ele pode ajudar a resolver seu problema rapidamente!</p>
+    </div>
+
+    <!-- Formulário -->
+    <div class="form-container">
+        <h2>Abrir Chamado</h2>
+        <input type="text" id="titulo" placeholder="Título">
+        <textarea id="descricao" placeholder="Descrição"></textarea>
+        <input type="text" id="categoria" placeholder="Categoria" readonly>
+        <button>Enviar</button>
+    </div>
+</main>
+
+<!-- Script do Chatbase -->
+<script>
+(function(){
+    if(!window.chatbase || window.chatbase("getState") !== "initialized"){
+        window.chatbase = (...arguments) => {
+            if(!window.chatbase.q) window.chatbase.q = [];
+            window.chatbase.q.push(arguments)
+        };
+        window.chatbase = new Proxy(window.chatbase, {
+            get(target, prop){
+                if(prop === "q"){ return target.q }
+                return (...args) => target(prop, ...args)
+            }
+        });
+    }
+    const onLoad = function(){
+        const script = document.createElement("script");
+        script.src = "https://www.chatbase.co/embed.min.js";
+        script.id = "3uVHuq4v8ltyUg6KgtJrg"; // substitua pelo seu ID
+        script.domain = "www.chatbase.co";
+        document.body.appendChild(script);
+    };
+    if(document.readyState === "complete"){ onLoad(); }
+    else { window.addEventListener("load", onLoad); }
+})();
+</script>
+
+</body>
+</html>
